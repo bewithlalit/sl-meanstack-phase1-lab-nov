@@ -45,15 +45,6 @@
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <!-- <div class="post-heading">
-                            <h1>Man must explore, and this is exploration at its greatest</h1>
-                            <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
-                            <span class="meta">
-                                Posted by
-                                <a href="#!">Shumacer</a>
-                                on August 24, 2021
-                            </span>
-                        </div> -->
                 </div>
             </div>
         </div>
@@ -66,12 +57,12 @@
 
             <form action="" novalidate>
                 <div class="mb-3">
-                    <label class="form-label" for="title">Name</label>
+                    <label class="form-label" for="name"><span style="color:#ff0000">*</span>Name</label>
                     <input class="form-control" type="text" name="name" id="postedBy" required>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label" for="title">Title</label>
+                    <label class="form-label" for="title"><span style="color:#ff0000">*</span>Title</label>
                     <input class="form-control" type="text" name="title" id="blogTitle" required>
                 </div>
 
@@ -81,16 +72,24 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label" for="password">Main Content</label>
+                    <label class="form-label" for="password"><span style="color:#ff0000">*</span>Main Content</label>
                     <textarea class="form-control" rows="6" placeholder="Write here in detail..." id="blogMainContent" required></textarea>
                 </div>
 
                 <button id="subButton" style="border-radius: 5px; margin: 1% 0 0 80%" 
-                class="btn btn-primary text-uppercase" type="button">
+                class="btn btn-primary text-uppercase" type="button" type="submit">
                     Submit</button>
             </form>
         </div>
     </div>
+    <!-- toaster -->
+    <div class="position-fixed top-0 start-50 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast alert alert-warning" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-body">
+            Please fill mandatory fields
+          </div>
+        </div>
+      </div>
     <!-- Footer-->
     <footer class="border-top">
         <div class="container px-4 px-lg-5">

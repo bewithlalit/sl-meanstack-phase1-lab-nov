@@ -1,11 +1,5 @@
-/*!
-* Start Bootstrap - Clean Blog v6.0.7 (https://startbootstrap.com/theme/clean-blog)
-* Copyright 2013-2021 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-clean-blog/blob/master/LICENSE)
-*/
 window.addEventListener('DOMContentLoaded', () => {
     let scrollPos = 0;
-    onPageInit();
     const mainNav = document.getElementById('mainNav');
     const headerHeight = mainNav.clientHeight;
     window.addEventListener('scroll', function () {
@@ -15,7 +9,6 @@ window.addEventListener('DOMContentLoaded', () => {
             if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
                 mainNav.classList.add('is-visible');
             } else {
-                console.log(123);
                 mainNav.classList.remove('is-visible', 'is-fixed');
             }
         } else {
@@ -27,16 +20,16 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         scrollPos = currentTop;
     });
+    onPageInit();
 })
 
 function onPageInit() {
     if (localStorage.getItem('data') == null) {
-        console.log('on page Init works here')
         document.querySelector('.post-preview').innerHTML = `<h1>No blogs posted yet</h1>`
     }
     else {
-        let info = JSON.parse(localStorage.getItem('data'));
-        info.forEach((i) => {
+        let userData = JSON.parse(localStorage.getItem('data'));
+        userData.forEach((i) => {
             document.querySelector('.post-preview').innerHTML += ` <a href="post.html">
             <h2 id="postTitle" class="post-title">${i.title}</h2>
             <h3 id="postMainContent" class="post-subtitle">${i.mainContent}</h3>
@@ -44,35 +37,46 @@ function onPageInit() {
         <p class="post-meta">
             Posted by
             <a href="#!">${i.postedBy}</a>
-            on September 24, 2021
+            on ${i.cDate}
         </p>
         <hr class="my-4" />`
         })
     }
 }
 
-let onSubmit = document.querySelector('#subButton')
+var onSubmit = document.querySelector('#subButton');
 onSubmit.addEventListener('click', () => {
     let postedBy = document.querySelector('#postedBy').value;
     let title = document.querySelector('#blogTitle').value;
     let content = document.querySelector('#blogContent').value;
     let mainContent = document.querySelector('#blogMainContent').value;
-    if(title == '' && mainContent == ' ' && postedBy == '') {
-        /* document.querySelector('.post-preview').innerHTML = `<h1>No blogs posted yet</h1>` */
+    var myDate = new Date();
+    let daysList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let monthsList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let date = myDate.getDate();
+    let month = monthsList[myDate.getMonth()];
+    let year = myDate.getFullYear();
+
+    let today = `${month} ${date}, ${year}`;
+    if (title == '' && mainContent == '' && postedBy == '') {
+        triggerToast();
         return;
     }
     if (localStorage.getItem('data') == null) {
-        console.log('Nothing here')
-        let info = [{ title: title, content: content, mainContent: mainContent, postedBy: postedBy }]
-        localStorage.setItem('data', JSON.stringify(info));
+        let userData = [{ title: title, content: content, mainContent: mainContent, postedBy: postedBy, cDate: today }]
+        localStorage.setItem('data', JSON.stringify(userData));
     } else {
-        let info = JSON.parse(localStorage.getItem('data'));
-        info.push({ title: title, content: content, mainContent: mainContent, postedBy: postedBy})
-        console.log(info);
-        localStorage.setItem('data', JSON.stringify(info));
+        let userData = JSON.parse(localStorage.getItem('data'));
+        userData.push({ title: title, content: content, mainContent: mainContent, postedBy: postedBy, cDate: today});
+        localStorage.setItem('data', JSON.stringify(userData));
     }
     window.location.href="index.html";
 })
 
+function triggerToast() {
+    var toastLiveExample = document.getElementById('liveToast')
+    var toast = new bootstrap.Toast(toastLiveExample)
+    toast.show()
+}
 
 
